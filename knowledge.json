@@ -1,0 +1,62 @@
+{
+    "personal_info": {
+      "full_name": "Nas",
+      "phone": "00000000000000",
+      "email": "lpsang.nas@gmail.com",
+      "linkedin": "https://www.linkedin.com/in/lpsang",
+      "github": "https://github.com/lpsangg",
+      "portfolio": "https://lpsangg.github.io/lpsang"
+    },
+    "education": {
+      "university": "Đại học Kỹ Thuật - Công Nghệ Cần Thơ",
+      "major": "Khoa học Máy tính",
+      "student_id": "KHMT0121",
+      "gpa": 3.43,
+      "graduation_year": 2025
+    },
+    "skills": {
+      "programming_languages": ["Python"],
+      "frameworks": ["TensorFlow", "Keras", "OpenCV", "YOLOv8", "Flask"],
+      "tools": ["Pandas", "NumPy", "Scikit-learn", "PyCharm", "VS Code", "Git"],
+      "soft_skills": ["Quản lý dự án", "Làm việc nhóm", "Tiếng Anh đọc hiểu tài liệu"]
+    },
+    "projects": [
+      {
+        "name": "Nhận diện phân bón Ca Mau bằng YOLOv8",
+        "description": "Hệ thống theo dõi sản phẩm trên băng chuyền sử dụng AI",
+        "technologies": ["Python", "YOLOv8", "OpenCV", "DeepSort"],
+        "achievement": "Giải Khuyến khích cuộc thi IIoT Automation Solutions 2023",
+        "repo": "https://github.com/lpsangg/fertilizer-detection"
+      },
+      {
+        "name": "Dự báo giá dầu WTI bằng LSTM",
+        "description": "Mô hình dự báo chuỗi thời gian ứng dụng trong logistics",
+        "technologies": ["Python", "TensorFlow", "LSTM", "Time Series Forecasting"],
+        "metrics": {
+          "MAE": 1.24,
+          "RMSE": 1.86
+        }
+      }
+    ],
+    "certificates": [
+      {
+        "name": "Foundations of Project Management",
+        "issuer": "Google via Coursera",
+        "year": 2023
+      },
+      {
+        "name": "Giải Khuyến khích IIoT Automation Solutions",
+        "issuer": "Đại học Cần Thơ",
+        "year": 2023
+      }
+    ],
+    "preferences": {
+      "interested_fields": ["Computer Vision", "Time Series Forecasting", "AI in Agriculture"],
+      "work_environment": "Ứng dụng AI vào giải quyết bài toán thực tế",
+      "job_search_status": "Đang tìm kiếm cơ hội Intern/Fresher CNTT"
+    },
+    "metadata": {
+      "last_updated": "2024-05-20",
+      "source": "Tổng hợp từ thông tin người dùng cung cấp"
+    }
+  }
