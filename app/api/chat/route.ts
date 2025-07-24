@@ -2,6 +2,8 @@
 import { connectToDatabase } from "@/lib/mongodb";
 import fs from "fs";
 import path from "path";
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
 
 export const maxDuration = 30
 
@@ -129,9 +131,39 @@ function mapQuestionToKnowledge(question: string, knowledge: any): string | null
   return null;
 }
 
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL!,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+});
+
+const ratelimit = new Ratelimit({
+  redis,
+  limiter: Ratelimit.fixedWindow(10, "1 m"), // 10 requests mỗi 1 phút
+  analytics: true,
+});
+
+const aiCache = new Map<string, string>();
+
 export async function POST(req: Request) {
+  // Rate limiting với Upstash
+  const ip = req.headers.get("x-forwarded-for") || "unknown";
+  const { success } = await ratelimit.limit(ip);
+  if (!success) {
+    return new Response("Too many requests", { status: 429 });
+  }
+
   const { messages } = await req.json();
   const lastUserMsg = messages?.filter((m: any) => m.role === "user").pop();
+  const question = lastUserMsg?.content?.trim();
+
+  // Kiểm tra cache trước khi gọi AI
+  if (question && aiCache.has(question)) {
+    const cachedReply = aiCache.get(question);
+    return new Response(JSON.stringify({ reply: cachedReply }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" }
+    });
+  }
 
   // Đọc knowledge.json
   const knowledgePath = path.join(process.cwd(), "knowledge.json");
@@ -186,6 +218,7 @@ export async function POST(req: Request) {
     console.error("Lỗi lưu prompt vào MongoDB:", err);
   }
 
+  // Gọi OpenRouter AI với stream: true
   const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
     method: "POST",
     headers: {
@@ -197,19 +230,23 @@ export async function POST(req: Request) {
     body: JSON.stringify({
       model: "moonshotai/kimi-k2",
       messages: fullMessages,
-      max_tokens: 500
+      max_tokens: 500,
+      stream: true
     })
   });
 
-  if (!response.ok) {
+  if (!response.ok || !response.body) {
     const error = await response.text();
     return new Response(JSON.stringify({ reply: `Lỗi: ${error}` }), { status: 500 });
   }
 
-  const data = await response.json();
-  const reply = data.choices?.[0]?.message?.content || "Lỗi: Không nhận được phản hồi từ AI.";
-  return new Response(JSON.stringify({ reply }), {
+  // Trả về stream cho client
+  return new Response(response.body, {
     status: 200,
-    headers: { "Content-Type": "application/json" }
+    headers: {
+      "Content-Type": "text/event-stream",
+      "Cache-Control": "no-cache",
+      "Connection": "keep-alive"
+    }
   });
 }

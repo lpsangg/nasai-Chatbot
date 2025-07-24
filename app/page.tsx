@@ -60,14 +60,47 @@ export default function ModernChatbot() {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: [{ role: "user", content: userMsg }] })
+        body: JSON.stringify({ messages: [...messages, { role: "user", content: userMsg }] })
       })
-      const data = await res.json()
-      setMessages(prev => {
-        const newMsgs = [...prev, { role: 'assistant' as const, content: data.reply, id: Date.now() + "-bot" }]
-        localStorage.setItem("chatHistory", JSON.stringify(newMsgs))
-        return newMsgs
-      })
+      if (res.headers.get("content-type")?.includes("text/event-stream")) {
+        // Xử lý stream
+        const reader = res.body!.getReader();
+        let assistantMsg = "";
+        setMessages(prev => {
+          const newMsgs = [...prev, { role: 'assistant' as const, content: "", id: Date.now() + "-bot" }];
+          localStorage.setItem("chatHistory", JSON.stringify(newMsgs))
+          return newMsgs;
+        });
+        let done = false;
+        while (!done) {
+          const { value, done: doneReading } = await reader.read();
+          done = doneReading;
+          if (value) {
+            const chunk = new TextDecoder().decode(value);
+            assistantMsg += chunk;
+            setMessages(prev => {
+              // Cập nhật content của assistant message cuối cùng
+              const newMsgs = [...prev];
+              for (let i = newMsgs.length - 1; i >= 0; i--) {
+                if (newMsgs[i].role === 'assistant') {
+                  newMsgs[i] = { ...newMsgs[i], content: assistantMsg };
+                  break;
+                }
+              }
+              localStorage.setItem("chatHistory", JSON.stringify(newMsgs))
+              return newMsgs;
+            });
+          }
+        }
+      } else {
+        // Xử lý JSON thông thường (cache)
+        const data = await res.json()
+        setMessages(prev => {
+          const newMsgs = [...prev, { role: 'assistant' as const, content: data.reply, id: Date.now() + "-bot" }]
+          localStorage.setItem("chatHistory", JSON.stringify(newMsgs))
+          return newMsgs
+        })
+      }
     } catch (e) {
       setMessages(prev => {
         const newMsgs = [...prev, { role: 'assistant' as const, content: "Lỗi kết nối server.", id: Date.now() + "-err" }]
