@@ -77,18 +77,32 @@ export default function ModernChatbot() {
           done = doneReading;
           if (value) {
             const chunk = new TextDecoder().decode(value);
-            assistantMsg += chunk;
-            setMessages(prev => {
-              // Cập nhật content của assistant message cuối cùng
-              const newMsgs = [...prev];
-              for (let i = newMsgs.length - 1; i >= 0; i--) {
-                if (newMsgs[i].role === 'assistant') {
-                  newMsgs[i] = { ...newMsgs[i], content: assistantMsg };
-                  break;
+            // Xử lý từng dòng trong chunk
+            chunk.split('\n').forEach(line => {
+              if (line.startsWith('data: ')) {
+                const dataStr = line.replace('data: ', '').trim();
+                if (dataStr && dataStr !== '[DONE]') {
+                  try {
+                    const data = JSON.parse(dataStr);
+                    const delta = data.choices?.[0]?.delta?.content;
+                    if (delta) {
+                      assistantMsg += delta;
+                      setMessages(prev => {
+                        // Cập nhật content của assistant message cuối cùng
+                        const newMsgs = [...prev];
+                        for (let i = newMsgs.length - 1; i >= 0; i--) {
+                          if (newMsgs[i].role === 'assistant') {
+                            newMsgs[i] = { ...newMsgs[i], content: assistantMsg };
+                            break;
+                          }
+                        }
+                        localStorage.setItem("chatHistory", JSON.stringify(newMsgs))
+                        return newMsgs;
+                      });
+                    }
+                  } catch {}
                 }
               }
-              localStorage.setItem("chatHistory", JSON.stringify(newMsgs))
-              return newMsgs;
             });
           }
         }
