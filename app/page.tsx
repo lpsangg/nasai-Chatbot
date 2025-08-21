@@ -127,7 +127,8 @@ export default function ModernChatbot() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-purple-900 dark:to-indigo-900">
-      {/* Popup bảo trì */}
+      {/*
+      Popup bảo trì
       <div style={{
         position: 'fixed',
         top: 0,
@@ -152,6 +153,7 @@ export default function ModernChatbot() {
           <p style={{ fontSize: 18, color: '#333' }}>Web đang bảo trì, sẽ sớm trở lại.<br/>Cảm ơn bạn đã quan tâm!</p>
         </div>
       </div>
+      */}
       {/* Header */}
       <div className="sticky top-0 z-10 backdrop-blur-md bg-white/80 dark:bg-gray-900/80 border-b border-purple-200 dark:border-purple-800">
         <div className="max-w-4xl mx-auto px-4 py-4">

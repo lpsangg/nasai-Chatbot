@@ -89,16 +89,4 @@ pnpm run dev
 
 ---
 
-## Ảnh minh họa giao diện
 
-| Giao diện chính | Giao diện chat | Dark mode |
-|---|---|---|
-| ![nas](frontend/public/img/nas.png) | ![chat](frontend/public/placeholder-user.jpg) | ![dark](frontend/public/placeholder-logo.png) |
-
----
-
-## License
-
-MIT
-
----
