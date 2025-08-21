@@ -1,35 +1,104 @@
-﻿# NasAI Chatbot
+﻿# NasAI Empathy Bot
 
-### 1. Frontend (UI & Client)
-- **Next.js**: Framework React cho SSR/SSG, routing, API routes.
-- **React**: Thư viện xây dựng giao diện người dùng.
-- **TypeScript**: Ngôn ngữ lập trình có kiểm tra kiểu tĩnh.
-- **Tailwind CSS**: Framework CSS tiện dụng, utility-first.
-- **Shadcn UI**: Bộ component UI (dựa trên các file trong `components/ui/`).
-- **Lucide Icons**: Bộ icon SVG hiện đại (dùng các icon như Bot, User...).
-- **Custom Hooks**: `use-mobile`, `use-toast`, ...
+*Chatbot cảm xúc, động viên và trả lời thông tin cá nhân tự động*
 
-### 2. State & Data
-- **useState, useEffect (React Hooks)**: Quản lý state, side effect.
-- **LocalStorage**: Lưu lịch sử chat phía client.
+![Next.js](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
+![OpenRouter](https://img.shields.io/badge/OpenRouter-AI-4F46E5?style=for-the-badge)
 
-### 3. Backend (API & Server)
-- **Next.js API Route**: Xử lý endpoint `/api/chat`.
-- **Node.js**: Môi trường chạy backend (mặc định của Next.js).
-- **MongoDB**: Lưu trữ prompt/chat log (kết nối qua file `lib/mongodb.ts`).
-- **Upstash Redis**: Dùng cho rate limiting (giới hạn số lần gọi API).
-- **@upstash/ratelimit, @upstash/redis**: Thư viện JS để kết nối và thực hiện rate limit với Upstash.
+---
 
-### 4. AI & Chatbot
-- **OpenRouter AI**: Dịch vụ AI trả lời hội thoại, tương thích OpenAI API.
-- **Streaming API**: Trả về dữ liệu dạng stream (`text/event-stream`) cho trải nghiệm chat mượt mà.
+## Giới thiệu
 
-### 5. Build & Tooling
-- **pnpm**: Trình quản lý package (thay thế npm/yarn).
-- **PostCSS**: Xử lý CSS (dùng với Tailwind).
-- **TypeScript Compiler (tsc)**: Kiểm tra type, build code.
-- **ESLint/Prettier** (có thể có): Lint/format code.
+NasAI Bot là chatbot cảm xúc, động viên người dùng và trả lời các câu hỏi về thông tin cá nhân, học vấn, kỹ năng, dự án, chứng chỉ... Dữ liệu cá nhân được lưu trong file `frontend/knowledge.json`, các câu hỏi khác sẽ được trả lời bằng AI (OpenRouter).
 
-### 6. Khác
-- **.env**: Quản lý biến môi trường (API key, Upstash URL/token...).
-- **Vercel/Netlify** (nếu deploy): Hosting serverless cho Next.js.
+![Giao diện chatbot](frontend/public/img/nas.png)
+
+---
+
+## Tính Năng Nổi Bật
+
+- **Trả lời tự động thông tin cá nhân**  
+  Dựa trên dữ liệu trong `frontend/knowledge.json`.
+- **Động viên, trả lời cảm xúc bằng AI**  
+  Sử dụng OpenRouter để sinh câu trả lời tích cực.
+- **Lưu lịch sử chat**  
+  Lưu vào localStorage và MongoDB.
+- **Giao diện hiện đại, responsive**  
+  Hỗ trợ dark mode, tối ưu cho mobile.
+
+---
+
+## Luồng Hoạt Động
+
+1. **Người dùng nhập tin nhắn**  
+   ![Giao diện nhập tin nhắn](frontend/public/placeholder-user.jpg)
+2. **Bot kiểm tra câu hỏi**  
+   Nếu trùng thông tin cá nhân, trả lời trực tiếp. Nếu không, gọi AI.
+3. **Hiển thị lịch sử chat**  
+   ![Lịch sử chat](frontend/public/placeholder-logo.png)
+
+---
+
+## Công Nghệ Sử Dụng
+
+- **Frontend**: Next.js, TypeScript, Tailwind CSS, shadcn/ui
+- **Backend**: API route Next.js, MongoDB
+- **AI**: OpenRouter API
+
+---
+
+## Hướng Dẫn Cài Đặt & Deploy
+
+### 1. Clone repo
+```bash
+git clone https://github.com/lpsangg/nasaiBot.git
+cd nasaiBot
+```
+
+### 2. Cài đặt dependencies
+```bash
+cd frontend
+pnpm install
+```
+
+### 3. Tạo file môi trường
+Tạo file `frontend/.env.local` và điền các biến cần thiết (API key, MongoDB URI...).
+
+### 4. Tạo file dữ liệu cá nhân
+Tạo file `frontend/knowledge.json` theo mẫu:
+```json
+{
+  "name": "Your Name",
+  "skills": ["Skill 1", "Skill 2"],
+  "projects": ["Project 1", "Project 2"]
+}
+```
+
+### 5. Chạy local
+```bash
+pnpm run dev
+```
+
+### 6. Deploy lên Vercel
+- Kết nối repo với Vercel.
+- Chọn Root Directory là `frontend`.
+- Thêm biến môi trường trên Vercel.
+
+---
+
+## Ảnh minh họa giao diện
+
+| Giao diện chính | Giao diện chat | Dark mode |
+|---|---|---|
+| ![nas](frontend/public/img/nas.png) | ![chat](frontend/public/placeholder-user.jpg) | ![dark](frontend/public/placeholder-logo.png) |
+
+---
+
+## License
+
+MIT
+
+---
