@@ -12,9 +12,9 @@
 
 ## Giới thiệu
 
-NasAI Bot là chatbot cảm xúc, động viên người dùng và trả lời các câu hỏi về thông tin cá nhân, học vấn, kỹ năng, dự án, chứng chỉ... Dữ liệu cá nhân được lưu trong file `frontend/knowledge.json`, các câu hỏi khác sẽ được trả lời bằng AI (OpenRouter).
+NasAI Bot là chatbot cảm xúc, động viên người dùng và trả lời các câu hỏi về thông tin cá nhân, học vấn, kỹ năng, dự án, chứng chỉ... của người tạo ra chatbot. Dữ liệu cá nhân được lưu trong file `frontend/knowledge.json`, các câu hỏi khác sẽ được trả lời bằng AI (OpenRouter).
 
-![Giao diện chatbot](frontend/public/img/nas.png)
+![Giao diện chatbot](frontend/img/ui.png)
 
 ---
 
@@ -31,16 +31,6 @@ NasAI Bot là chatbot cảm xúc, động viên người dùng và trả lời c
 
 ---
 
-## Luồng Hoạt Động
-
-1. **Người dùng nhập tin nhắn**  
-   ![Giao diện nhập tin nhắn](frontend/public/placeholder-user.jpg)
-2. **Bot kiểm tra câu hỏi**  
-   Nếu trùng thông tin cá nhân, trả lời trực tiếp. Nếu không, gọi AI.
-3. **Hiển thị lịch sử chat**  
-   ![Lịch sử chat](frontend/public/placeholder-logo.png)
-
----
 
 ## Công Nghệ Sử Dụng
 
