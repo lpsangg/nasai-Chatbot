@@ -7,6 +7,7 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
 ![OpenRouter](https://img.shields.io/badge/OpenRouter-AI-4F46E5?style=for-the-badge)
+![Vercel](https://img.shields.io/badge/Vercel-000?style=for-the-badge&logo=vercel&logoColor=white)
 
 ---
 
@@ -14,7 +15,7 @@
 
 NasAI Bot là chatbot cảm xúc, động viên người dùng và trả lời các câu hỏi về thông tin cá nhân, học vấn, kỹ năng, dự án, chứng chỉ... của người tạo ra chatbot. Dữ liệu cá nhân được lưu trong file `frontend/knowledge.json`, các câu hỏi khác sẽ được trả lời bằng AI (OpenRouter).
 
-![Giao diện chatbot](frontend/img/ui.png)
+![Giao diện chatbot](img/ui.png)
 
 ---
 
@@ -25,7 +26,7 @@ NasAI Bot là chatbot cảm xúc, động viên người dùng và trả lời c
 - **Động viên, trả lời cảm xúc bằng AI**  
   Sử dụng OpenRouter để sinh câu trả lời tích cực.
 - **Lưu lịch sử chat**  
-  Lưu vào localStorage và MongoDB.
+  Lưu vào localStorage và MongoDB Atlas.
 - **Giao diện hiện đại, responsive**  
   Hỗ trợ dark mode, tối ưu cho mobile.
 
@@ -35,8 +36,9 @@ NasAI Bot là chatbot cảm xúc, động viên người dùng và trả lời c
 ## Công Nghệ Sử Dụng
 
 - **Frontend**: Next.js, TypeScript, Tailwind CSS, shadcn/ui
-- **Backend**: API route Next.js, MongoDB
+- **Backend**: API route Next.js, MongoDB Atlas
 - **AI**: OpenRouter API
+- **Deploy**: Vercel
 
 ---
 
@@ -55,7 +57,7 @@ pnpm install
 ```
 
 ### 3. Tạo file môi trường
-Tạo file `frontend/.env.local` và điền các biến cần thiết (API key, MongoDB URI...).
+Tạo file `frontend/.env.local` và điền các biến cần thiết (API key, MongoDB Atlas URI...).
 
 ### 4. Tạo file dữ liệu cá nhân
 Tạo file `frontend/knowledge.json` theo mẫu:
@@ -75,7 +77,7 @@ pnpm run dev
 ### 6. Deploy lên Vercel
 - Kết nối repo với Vercel.
 - Chọn Root Directory là `frontend`.
-- Thêm biến môi trường trên Vercel.
+- Thêm biến môi trường trên Vercel (bao gồm MongoDB Atlas URI, API key).
 
 ---
 
